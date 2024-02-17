@@ -4,6 +4,8 @@ import App from './views/App';
 import { MantineProvider } from '@mantine/core';
 import { theme } from "./assets/styles/theme";
 import '@mantine/core/styles.css';
+import Login from './views/Login/Login';
+import Register from 'views/Register/Register';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <MantineProvider theme={theme} defaultColorScheme='light'>
-      <App />
+      <Register />
     </MantineProvider>
   </React.StrictMode>
 );
