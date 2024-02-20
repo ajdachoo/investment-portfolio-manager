@@ -1,6 +1,5 @@
-import { Anchor, Button, Flex, LoadingOverlay, NativeSelect, Paper, PasswordInput, Text, TextInput, Title } from "@mantine/core";
-import classes from 'views/Login/Login.module.css'
 import React from "react";
+import { Anchor, Button, Flex, LoadingOverlay, NativeSelect, Paper, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 import { CurrencyEnum } from "types/types";
 
 const currencyArr = Object.keys(CurrencyEnum).filter((x) => isNaN(Number(x)));

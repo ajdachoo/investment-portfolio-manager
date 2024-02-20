@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './views/App';
 import { MantineProvider } from '@mantine/core';
 import { theme } from "./assets/styles/theme";
 import '@mantine/core/styles.css';
-import Login from './views/Login/Login';
-import Register from 'views/Register/Register';
+import Root from 'views/Root';
+import { AuthProvider } from 'hooks/useAuth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <MantineProvider theme={theme} defaultColorScheme='light'>
-      <Register />
+      <AuthProvider>
+        <Root />
+      </AuthProvider>
     </MantineProvider>
   </React.StrictMode>
 );

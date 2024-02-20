@@ -1,9 +1,42 @@
-import { useMantineTheme, Flex, Text, Paper, Container, TextInput, PasswordInput, Button, Title, Anchor } from "@mantine/core";
-import classes from './Login.module.css'
-import React from "react";
+import { Flex, Text, Paper, TextInput, PasswordInput, Button, Title, Anchor, LoadingOverlay } from "@mantine/core";
+import React, { useState } from "react";
+import { hasLength, isEmail, useForm } from "@mantine/form";
+import { useAuth } from "hooks/useAuth";
+
+interface LoginFormValues {
+    email: string;
+    password: string;
+}
 
 const Login = () => {
-    const theme = useMantineTheme();
+    const auth = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const initialFormValues: LoginFormValues = {
+        email: 'jannowak@gmail.com',
+        password: 'jannowak'
+    }
+
+    const form = useForm<LoginFormValues>({
+        initialValues: initialFormValues,
+        validate: {
+            email: isEmail('Invalid email'),
+            password: hasLength({ min: 8 }, 'min 8 characters'),
+        }
+    });
+
+    const handleOnSubmit = async (values: LoginFormValues) => {
+        setIsLoading(true);
+        const isLogged = await auth.signIn(values);
+        if (!isLogged) {
+            console.log('promise zlapany');
+            form.setFieldError('password', 'Invalid email or password');
+            form.setFieldError('email', ' ');
+            setIsLoading(false);
+        }
+    }
+
+
 
     return (
 
@@ -18,12 +51,25 @@ const Login = () => {
                 </Anchor>
             </Text>
             <Paper withBorder w={400} shadow='md' radius='md' p='sm'>
-                <TextInput label='Email' placeholder="Enter your email" required />
-                <PasswordInput label='Password' placeholder="Your password" required mt='md' />
-                <Anchor component="button" size="sm" mt='md'>
-                    Forgot password?
-                </Anchor>
-                <Button fullWidth mt='xl'>Sign in</Button>
+                <form onSubmit={form.onSubmit((values) => handleOnSubmit(values))}>
+                    <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+                    <TextInput
+                        label='Email'
+                        placeholder="Enter your email"
+                        required
+                        {...form.getInputProps('email')}
+                    />
+                    <PasswordInput
+                        label='Password'
+                        placeholder="Your password"
+                        required mt='md'
+                        {...form.getInputProps('password')}
+                    />
+                    <Anchor component="button" size="sm" mt='md'>
+                        Forgot password?
+                    </Anchor>
+                    <Button type="submit" fullWidth mt='xl'>Sign in</Button>
+                </form>
             </Paper>
         </Flex >
 
