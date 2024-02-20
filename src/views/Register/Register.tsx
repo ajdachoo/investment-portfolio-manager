@@ -1,10 +1,13 @@
 import React from "react";
 import { Anchor, Button, Flex, LoadingOverlay, NativeSelect, Paper, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 import { CurrencyEnum } from "types/types";
+import { useNavigate } from "react-router-dom";
 
 const currencyArr = Object.keys(CurrencyEnum).filter((x) => isNaN(Number(x)));
 
 const Register = () => {
+    const navigate = useNavigate();
+
     return (
 
         <Flex align='center' justify='center' direction='column' h='100vh' gap='md'>
@@ -13,7 +16,7 @@ const Register = () => {
             </Title>
             <Text c="dimmed" size="sm" ta="center" mt={5}>
                 Already have na account?{' '}
-                <Anchor size="sm" component="button">
+                <Anchor onClick={() => navigate('/login')} size="sm" component="button">
                     Sign In
                 </Anchor>
             </Text>
