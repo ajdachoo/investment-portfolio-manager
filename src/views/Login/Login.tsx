@@ -1,18 +1,19 @@
-import { Flex, Text, Paper, TextInput, PasswordInput, Button, Title, Anchor, LoadingOverlay } from "@mantine/core";
+import { Flex, Text, Paper, TextInput, PasswordInput, Button, Title, Anchor, LoadingOverlay, Notification, Alert } from "@mantine/core";
 import React, { useState } from "react";
 import { hasLength, isEmail, useForm } from "@mantine/form";
 import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { SignInProps } from "types/types";
+import { AxiosError, isAxiosError } from "axios";
+import { useDisclosure } from "@mantine/hooks";
 
-interface LoginFormValues {
-    email: string;
-    password: string;
-}
+interface LoginFormValues extends SignInProps { };
 
 const Login = () => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const initialFormValues: LoginFormValues = {
         email: 'jannowak@gmail.com',
@@ -29,12 +30,15 @@ const Login = () => {
 
     const handleOnSubmit = async (values: LoginFormValues) => {
         setIsLoading(true);
-        const isLogged = await auth.signIn(values);
-        if (!isLogged) {
-            console.log('promise zlapany');
-            form.setFieldError('password', 'Invalid email or password');
-            form.setFieldError('email', ' ');
-            setIsLoading(false);
+
+        try {
+            await auth.signIn(values);
+        } catch (e) {
+            if (isAxiosError(e)) {
+                const error = e as AxiosError;
+                setErrorMessage(error.message)
+                setIsLoading(false);
+            }
         }
     }
 
@@ -52,6 +56,7 @@ const Login = () => {
                     Create account
                 </Anchor>
             </Text>
+            {errorMessage ? (<Alert w={400} variant="light" color="red" title="Error" withCloseButton onClick={() => setErrorMessage('')}>{errorMessage}</Alert>) : null}
             <Paper withBorder w={400} shadow='md' radius='md' p='sm'>
                 <form onSubmit={form.onSubmit((values) => handleOnSubmit(values))}>
                     <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />

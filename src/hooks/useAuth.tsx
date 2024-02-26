@@ -1,7 +1,7 @@
-import React, { FC, useContext } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_URL, UserProps } from "types/types";
+import { API_URL, RegisterUserProps, SignInProps, UserProps } from "types/types";
 
 interface AuthProviderProps {
     children: React.ReactNode;
@@ -9,13 +9,9 @@ interface AuthProviderProps {
 
 type AuthContextType = {
     user: UserProps | null;
-    signIn: (signInData: SignInProps) => Promise<boolean>;
+    signIn: (signInData: SignInProps) => Promise<void>;
     signOut: () => void;
-}
-
-type SignInProps = {
-    email: string;
-    password: string;
+    registerUser: (registerData: RegisterUserProps) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextType | null>(null);
@@ -42,28 +38,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }, []);
 
     const signIn = async (signInData: SignInProps) => {
-        try {
-            const responseToken = await axios.post(`${API_URL}/account/login`, signInData);
-            localStorage.setItem('token', responseToken.data);
-            const responseUser = await axios.get(`${API_URL}/account`, {
-                headers: {
-                    authorization: `Bearer ${responseToken.data}`,
-                },
-            });
-            setUser(responseUser.data);
-        } catch (e) {
-            console.log(e);
-            return false;
-        }
-        return true;
-    };
+        const JwtToken = await axios.post(`${API_URL}/account/login`, signInData);
+        localStorage.setItem('token', JwtToken.data);
+
+        const responseUser = await axios.get<UserProps>(`${API_URL}/account`, {
+            headers: {
+                authorization: `Bearer ${JwtToken.data}`,
+            },
+        });
+
+        setUser(responseUser.data);
+    }
 
     const signOut = () => {
         localStorage.removeItem('token');
         setUser(null);
     };
 
-    return (<AuthContext.Provider value={{ user, signIn, signOut }}>{children}</AuthContext.Provider>);
+    const registerUser = async (registerData: RegisterUserProps) => {
+        await axios.post(`${API_URL}/account/register`, registerData);
+    };
+
+    return (<AuthContext.Provider value={{ user, signIn, signOut, registerUser }}>{children}</AuthContext.Provider>);
 };
 
 export const useAuth = () => {

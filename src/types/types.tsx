@@ -11,6 +11,20 @@ export type UserProps = {
     currency: CurrencyEnum;
 };
 
+export type SignInProps = {
+    email: string;
+    password: string;
+}
+
+export type RegisterUserProps = {
+    firstName: string;
+    lastName: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+    currency: string;
+};
+
 export const API_URL = 'https://localhost:7289/api'
 
 export enum CurrencyEnum {
