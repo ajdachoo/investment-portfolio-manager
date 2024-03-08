@@ -36,13 +36,17 @@ const Login = () => {
         } catch (e) {
             if (isAxiosError(e)) {
                 const error = e as AxiosError;
-                setErrorMessage(error.message)
+                if (error.response) {
+                    const errorData = error.response.data as { [key: string]: string };
+                    const key = Object.keys(errorData)[0];
+                    setErrorMessage(errorData[key]);
+                } else {
+                    setErrorMessage(error.message);
+                }
                 setIsLoading(false);
             }
         }
     }
-
-
 
     return (
 
