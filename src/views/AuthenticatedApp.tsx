@@ -42,7 +42,7 @@ const App = () => {
       </AppShell.Navbar>
       <AppShell.Main>
         <Routes>
-          <Route path="/login" element={<Navigate to={'/'} />} />
+          <Route path="/login" element={<Navigate to={'/assets'} />} />
           <Route path="/wallets" element={<Button variant='filled'>Dupa</Button>} />
         </Routes>
       </AppShell.Main>
