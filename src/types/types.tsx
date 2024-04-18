@@ -14,7 +14,7 @@ export type UserProps = {
 export type SignInProps = {
     email: string;
     password: string;
-}
+};
 
 export type RegisterUserProps = {
     firstName: string;
@@ -25,7 +25,21 @@ export type RegisterUserProps = {
     currency: string;
 };
 
-export const API_URL = 'https://localhost:7289/api'
+export type AssetProps = {
+    id: number;
+    name: string;
+    ticker: string;
+    category: AssetCategoryEnum;
+    currentPrice: number;
+    percentageChange24h: number;
+    percentageChange7d: number;
+    percentageChange1m: number;
+    percentageChange1y: number;
+    updatedDate: string;
+    currency: CurrencyEnum;
+};
+
+export const API_URL = 'https://localhost:7289/api';
 
 export enum CurrencyEnum {
     PLN,
@@ -35,7 +49,21 @@ export enum CurrencyEnum {
     CHF
 };
 
+export enum AssetCategoryEnum {
+    PolishStocks = 'Polish stocks',
+    Cryptocurrencies = 'Cryptocurrencies',
+    USStocks = 'US stocks',
+    PhysicalCurrencies = 'Physical currencies'
+}
+
 export enum UserStatusEnum {
     Ok,
     Blocked
-}
+};
+
+/*export enum AssetCategoryEnum {
+    PolishStocks = 'Polish stocks',
+    Cryptocurrencies = 'Cryptocurrencies',
+    USStocks = 'US stocks',
+    PhysicalCurrencies = 'Physical currencies'
+} */

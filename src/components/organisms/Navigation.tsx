@@ -1,5 +1,5 @@
 import { NavLink } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Link, Routes, useLocation, useNavigate } from "react-router-dom";
 
 const mockData = [

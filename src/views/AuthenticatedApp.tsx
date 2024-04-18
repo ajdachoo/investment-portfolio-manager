@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppShell, Avatar, Button, Flex, Menu, rem, useMantineTheme } from '@mantine/core';
+import { AppShell, Avatar, Button, Center, Flex, Loader, Menu, rem, useMantineTheme } from '@mantine/core';
 import { LogOutIcon } from 'assets/icons/logOutIcon';
 import Navigation from '../components/organisms/Navigation';
 import { useAuth } from 'hooks/useAuth';
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
+import AssetsTable from 'components/organisms/AssetsTable';
 
 
 const App = () => {
@@ -40,10 +41,11 @@ const App = () => {
       <AppShell.Navbar>
         <Navigation />
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main display='flex' style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Routes>
           <Route path="/login" element={<Navigate to={'/assets'} />} />
           <Route path="/wallets" element={<Button variant='filled'>Dupa</Button>} />
+          <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>
     </AppShell>

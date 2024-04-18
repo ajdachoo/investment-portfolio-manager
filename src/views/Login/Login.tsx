@@ -5,7 +5,6 @@ import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { SignInProps } from "types/types";
 import { AxiosError, isAxiosError } from "axios";
-import { useDisclosure } from "@mantine/hooks";
 
 interface LoginFormValues extends SignInProps { };
 
@@ -33,6 +32,8 @@ const Login = () => {
 
         try {
             await auth.signIn(values);
+            navigate('/assets');
+
         } catch (e) {
             if (isAxiosError(e)) {
                 const error = e as AxiosError;
