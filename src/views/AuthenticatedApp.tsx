@@ -41,7 +41,7 @@ const App = () => {
       <AppShell.Navbar>
         <Navigation />
       </AppShell.Navbar>
-      <AppShell.Main display='flex' style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <AppShell.Main display='flex' style={{ justifyContent: 'center' }}>
         <Routes>
           <Route path="/login" element={<Navigate to={'/assets'} />} />
           <Route path="/wallets" element={<Button variant='filled'>Dupa</Button>} />
