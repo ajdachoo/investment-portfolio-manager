@@ -22,7 +22,7 @@ const WalletsSection = () => {
     } else {
         return (
             <>
-                <WalletItem wallet={wallets[0]} />
+                {wallets.map((item, index) => (<WalletItem key={index} wallet={item} />))}
             </>
         );
     }

@@ -33,5 +33,16 @@ export const useWallets = () => {
         }
     }, []);
 
-    return { getWallets };
+    const getWalletById = useCallback(async (id: number) => {
+        try {
+            let result = await walletsAPI.get<WalletProps>(`/wallet/${id}`);
+            result.data.assetCategoryPositions.forEach(c => c.categoryName = AssetCategoryEnum[c.categoryName as keyof typeof AssetCategoryEnum]);
+
+            return result.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }, [])
+
+    return { getWallets, getWalletById };
 };

@@ -76,6 +76,8 @@ export type AssetCategoryPosition = {
     categoryName: AssetCategoryEnum;
     percentageInWallet: number;
     totalValue: number;
+    totalProfit: number;
+    totalCost: number;
 }
 
 export const API_URL = 'https://localhost:7289/api';

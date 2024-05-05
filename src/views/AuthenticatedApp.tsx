@@ -7,6 +7,7 @@ import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import AssetsTable from 'components/organisms/AssetsTable';
 import WalletItem from 'components/molecules/WalletItem';
 import WalletsSection from 'components/organisms/WalletsSection';
+import WalletDetails from 'components/organisms/WalletDetails';
 
 
 const App = () => {
@@ -45,8 +46,9 @@ const App = () => {
       </AppShell.Navbar>
       <AppShell.Main display='flex' style={{ justifyContent: 'center' }}>
         <Routes>
-          <Route path="/login" element={<Navigate to={'/assets'} />} />
+          <Route path="/login" element={<Navigate to={'/wallets'} />} />
           <Route path="/wallets" element={<WalletsSection />} />
+          <Route path='/wallets/:id' element={<WalletDetails />} />
           <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>

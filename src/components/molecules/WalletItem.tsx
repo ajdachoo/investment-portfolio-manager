@@ -3,6 +3,7 @@ import { Flex, NumberFormatter, Paper, Title, Text } from "@mantine/core";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { AssetCategoryEnum, WalletProps } from "types/types";
 
 interface WalletItemProps {
@@ -33,6 +34,7 @@ const getDonutChartColor = (category: AssetCategoryEnum) => {
 }
 
 const WalletItem: React.FC<WalletItemProps> = ({ wallet: { id, name, details, assetCategoryPositions, currentValue, totalCost, totalProfit, currency, percentageChange24h, percentageChange1m, percentageChange7d, percentageChange1y } }) => {
+    const navigate = useNavigate();
     const data: DonutChartCell[] = [];
 
     assetCategoryPositions.forEach(({ categoryName, percentageInWallet }) => {
@@ -40,7 +42,7 @@ const WalletItem: React.FC<WalletItemProps> = ({ wallet: { id, name, details, as
     })
 
     return (
-        <Paper shadow='md' radius='md' h={500} p='md' style={{ cursor: 'pointer' }}>
+        <Paper shadow='md' radius='md' h={500} p='md' style={{ cursor: 'pointer' }} onClick={() => navigate(`${id}`)}>
             <Flex align='center' direction='column' gap='md'>
                 <Title order={3}>{name}</Title>
                 <Text c="dimmed">{details}</Text>
