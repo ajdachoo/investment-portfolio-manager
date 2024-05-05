@@ -1,26 +1,8 @@
 import { Flex, Loader, Table, TextInput } from "@mantine/core";
+import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import { useAssets } from "hooks/useAssets";
 import React, { useEffect, useState } from "react";
 import { AssetCategoryEnum, AssetProps } from "types/types";
-
-const getFormatPriceChange = (n: number) => {
-    if (n > 0) {
-        return `+${n.toFixed(2)}%`;
-    }
-    else {
-        return `${n.toFixed(2)}%`;
-    }
-};
-
-const getPriceChangeColor = (n: number) => {
-    if (n > 0) {
-        return 'green';
-    } else if (n < 0) {
-        return 'red';
-    } else {
-        return 'black';
-    }
-}
 
 const AssetsTable = () => {
     const { getAssets } = useAssets();
@@ -64,10 +46,10 @@ const AssetsTable = () => {
                                 <Table.Td>{item.ticker}</Table.Td>
                                 <Table.Td>{item.category}</Table.Td>
                                 <Table.Td>{`${item.currentPrice} ${item.currency}`}</Table.Td>
-                                <Table.Td c={getPriceChangeColor(item.percentageChange24h)}>{getFormatPriceChange(item.percentageChange24h)}</Table.Td>
-                                <Table.Td c={getPriceChangeColor(item.percentageChange7d)}>{getFormatPriceChange(item.percentageChange7d)}</Table.Td>
-                                <Table.Td c={getPriceChangeColor(item.percentageChange1m)}>{getFormatPriceChange(item.percentageChange1m)}</Table.Td>
-                                <Table.Td c={getPriceChangeColor(item.percentageChange1y)}>{getFormatPriceChange(item.percentageChange1y)}</Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange24h} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange7d} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange1m} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange1y} /></Table.Td>
                             </Table.Tr>
                         ))}
                     </Table.Tbody>

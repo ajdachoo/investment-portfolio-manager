@@ -1,3 +1,4 @@
+import '@mantine/charts/styles.css';
 import { useAuth } from "hooks/useAuth";
 import AuthenticatedApp from "./AuthenticatedApp";
 import UnauthenticatedApp from "./UnauthenticatedApp";

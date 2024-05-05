@@ -39,6 +39,45 @@ export type AssetProps = {
     currency: CurrencyEnum;
 };
 
+export type WalletProps = {
+    id: number;
+    name: string;
+    details: string;
+    createdDate: string;
+    updatedDate: string;
+    userId: number;
+    currentValue: number;
+    totalProfit: number;
+    totalCost: number;
+    currency: CurrencyEnum;
+    percentageChange24h: number;
+    percentageChange7d: number;
+    percentageChange1m: number;
+    percentageChange1y: number;
+    assetPositions: AssetPosition[];
+    assetCategoryPositions: AssetCategoryPosition[];
+}
+
+export type AssetPosition = {
+    assetId: number;
+    assetName: string;
+    ticker: string;
+    quantity: number;
+    currentValue: number;
+    totalCost: number;
+    avgCost: number;
+    profit: number;
+    percentageInWallet: number;
+    updatedDate: string;
+}
+
+export type AssetCategoryPosition = {
+    categoryId: number;
+    categoryName: AssetCategoryEnum;
+    percentageInWallet: number;
+    totalValue: number;
+}
+
 export const API_URL = 'https://localhost:7289/api';
 
 export enum CurrencyEnum {

@@ -33,7 +33,7 @@ const Register = () => {
             firstName: isNotEmpty(),
             lastName: isNotEmpty(),
             password: hasLength({ min: 8 }, 'min 8 characters'),
-            confirmPassword: (value, values) => value != values.password ? 'Password did not match' : null,
+            confirmPassword: (value, values) => value !== values.password ? 'Password did not match' : null,
             email: isEmail('Invalid email'),
             currency: isNotEmpty(),
         }

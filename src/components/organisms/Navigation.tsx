@@ -1,6 +1,6 @@
 import { NavLink } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Link, Routes, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const mockData = [
     { label: 'All assets', link: '/assets' },
@@ -14,7 +14,7 @@ const Navigation = () => {
     return (
         <>
             {mockData.map((item, index) => (
-                <NavLink to={item.link} component={Link} label={item.label} variant='light' active={active === index} onClick={() => setActive(index)} />
+                <NavLink key={index} to={item.link} component={Link} label={item.label} variant='light' active={active === index} onClick={() => setActive(index)} />
             ))}
         </>
     );

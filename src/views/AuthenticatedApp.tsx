@@ -5,6 +5,8 @@ import Navigation from '../components/organisms/Navigation';
 import { useAuth } from 'hooks/useAuth';
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import AssetsTable from 'components/organisms/AssetsTable';
+import WalletItem from 'components/molecules/WalletItem';
+import WalletsSection from 'components/organisms/WalletsSection';
 
 
 const App = () => {
@@ -44,7 +46,7 @@ const App = () => {
       <AppShell.Main display='flex' style={{ justifyContent: 'center' }}>
         <Routes>
           <Route path="/login" element={<Navigate to={'/assets'} />} />
-          <Route path="/wallets" element={<Button variant='filled'>Dupa</Button>} />
+          <Route path="/wallets" element={<WalletsSection />} />
           <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>
