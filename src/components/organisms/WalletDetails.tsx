@@ -1,4 +1,5 @@
 import { Flex, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
+import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import { useWallets } from "hooks/useWallets";
 import React, { useEffect, useState } from "react";
@@ -35,6 +36,10 @@ const WalletDetails = () => {
                             <Table.Th>Total value</Table.Th>
                             <Table.Th>Total profit</Table.Th>
                             <Table.Th>Total cost</Table.Th>
+                            <Table.Th>%24h</Table.Th>
+                            <Table.Th>%7d</Table.Th>
+                            <Table.Th>%1m</Table.Th>
+                            <Table.Th>%1y</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
@@ -48,6 +53,10 @@ const WalletDetails = () => {
                                 <Table.Td><NumberFormatter value={item.totalValue} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><PriceChangeFormatter size='sm' value={item.totalProfit} currency={wallet.currency} /></Table.Td>
                                 <Table.Td><NumberFormatter value={item.totalCost} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange24h} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange7d} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange1m} /></Table.Td>
+                                <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange1y} /></Table.Td>
                             </Table.Tr>
                         ))}
                     </Table.Tbody>

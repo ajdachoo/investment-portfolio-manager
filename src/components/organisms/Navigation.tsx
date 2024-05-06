@@ -1,5 +1,5 @@
 import { NavLink } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const mockData = [
@@ -9,7 +9,11 @@ const mockData = [
 
 const Navigation = () => {
     const location = useLocation();
-    const [active, setActive] = useState(mockData.findIndex((item) => (item.link === location.pathname)));
+    const [active, setActive] = useState(mockData.findIndex((item) => (location.pathname.includes(item.link))));
+
+    useEffect(() => {
+        setActive(mockData.findIndex((item) => (location.pathname.includes(item.link))));
+    }, [])
 
     return (
         <>

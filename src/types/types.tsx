@@ -78,6 +78,10 @@ export type AssetCategoryPosition = {
     totalValue: number;
     totalProfit: number;
     totalCost: number;
+    percentageChange24h: number;
+    percentageChange7d: number;
+    percentageChange1m: number;
+    percentageChange1y: number;
 }
 
 export const API_URL = 'https://localhost:7289/api';
