@@ -8,6 +8,7 @@ import AssetsTable from 'components/organisms/AssetsTable';
 import WalletItem from 'components/molecules/WalletItem';
 import WalletsSection from 'components/organisms/WalletsSection';
 import WalletDetails from 'components/organisms/WalletDetails';
+import WalletPositions from 'components/organisms/WalletPositions';
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/login" element={<Navigate to={'/wallets'} />} />
           <Route path="/wallets" element={<WalletsSection />} />
           <Route path='/wallets/:id' element={<WalletDetails />} />
+          <Route path='/wallets/:id/category/:categoryId' element={<WalletPositions />} />
           <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>

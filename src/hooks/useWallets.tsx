@@ -25,7 +25,10 @@ export const useWallets = () => {
     const getWallets = useCallback(async () => {
         try {
             let result = await walletsAPI.get<WalletProps[]>(`/wallet`);
-            result.data.forEach(x => x.assetCategoryPositions.forEach(c => c.categoryName = AssetCategoryEnum[c.categoryName as keyof typeof AssetCategoryEnum]));
+            result.data.forEach((x) => {
+                x.assetCategoryPositions.forEach(c => c.categoryName = AssetCategoryEnum[c.categoryName as keyof typeof AssetCategoryEnum]);
+                x.assetPositions.forEach(p => p.assetCategoryName = AssetCategoryEnum[p.assetCategoryName as keyof typeof AssetCategoryEnum]);
+            });
 
             return result.data;
         } catch (e) {

@@ -61,14 +61,21 @@ export type WalletProps = {
 export type AssetPosition = {
     assetId: number;
     assetName: string;
+    assetCategoryId: number;
+    assetCategoryName: AssetCategoryEnum;
     ticker: string;
+    price: number;
     quantity: number;
-    currentValue: number;
+    totalValue: number;
     totalCost: number;
     avgCost: number;
     profit: number;
     percentageInWallet: number;
     updatedDate: string;
+    percentageChange24h: number;
+    percentageChange7d: number;
+    percentageChange1m: number;
+    percentageChange1y: number;
 }
 
 export type AssetCategoryPosition = {
