@@ -1,8 +1,8 @@
-import { Flex, Loader, Table, TextInput } from "@mantine/core";
+import { Flex, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import { useAssets } from "hooks/useAssets";
 import React, { useEffect, useState } from "react";
-import { AssetCategoryEnum, AssetProps } from "types/types";
+import { AssetProps } from "types/types";
 
 const AssetsTable = () => {
     const { getAssets } = useAssets();
@@ -45,7 +45,7 @@ const AssetsTable = () => {
                                 <Table.Td>{item.name}</Table.Td>
                                 <Table.Td>{item.ticker}</Table.Td>
                                 <Table.Td>{item.category}</Table.Td>
-                                <Table.Td>{`${item.currentPrice} ${item.currency}`}</Table.Td>
+                                <Table.Td><NumberFormatter value={item.currentPrice} suffix={` ${item.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange24h} /></Table.Td>
                                 <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange7d} /></Table.Td>
                                 <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange1m} /></Table.Td>

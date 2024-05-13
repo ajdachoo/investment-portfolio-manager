@@ -91,7 +91,26 @@ export type AssetCategoryPosition = {
     percentageChange1y: number;
 }
 
+export type Transaction = {
+    id: number;
+    assetId: number;
+    assetName: string;
+    assetTicker: string;
+    walletId: string;
+    type: TransactionEnum;
+    price: number;
+    quantity: number;
+    initialValue: number;
+    currency: CurrencyEnum;
+    transactionDate: string;
+}
+
 export const API_URL = 'https://localhost:7289/api';
+
+export enum TransactionEnum {
+    Sell,
+    Buy
+}
 
 export enum CurrencyEnum {
     PLN,

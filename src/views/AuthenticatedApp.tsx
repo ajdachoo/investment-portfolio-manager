@@ -1,14 +1,14 @@
 import React from 'react';
-import { AppShell, Avatar, Button, Center, Flex, Loader, Menu, rem, useMantineTheme } from '@mantine/core';
+import { AppShell, Avatar, Flex, Menu, rem, useMantineTheme } from '@mantine/core';
 import { LogOutIcon } from 'assets/icons/logOutIcon';
 import Navigation from '../components/organisms/Navigation';
 import { useAuth } from 'hooks/useAuth';
-import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import AssetsTable from 'components/organisms/AssetsTable';
-import WalletItem from 'components/molecules/WalletItem';
 import WalletsSection from 'components/organisms/WalletsSection';
 import WalletDetails from 'components/organisms/WalletDetails';
 import WalletPositions from 'components/organisms/WalletPositions';
+import WalletTransactions from 'components/organisms/WalletTransactions';
 
 
 const App = () => {
@@ -49,8 +49,9 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Navigate to={'/wallets'} />} />
           <Route path="/wallets" element={<WalletsSection />} />
-          <Route path='/wallets/:id' element={<WalletDetails />} />
-          <Route path='/wallets/:id/category/:categoryId' element={<WalletPositions />} />
+          <Route path='/wallets/:walletId' element={<WalletDetails />} />
+          <Route path='/wallets/:walletId/category/:categoryId' element={<WalletPositions />} />
+          <Route path='/wallets/:walletId/category/:categoryId/transaction/:assetId' element={<WalletTransactions />} />
           <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>

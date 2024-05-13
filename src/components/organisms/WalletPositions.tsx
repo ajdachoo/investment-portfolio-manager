@@ -3,21 +3,22 @@ import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatte
 import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import { useWallets } from "hooks/useWallets";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { WalletProps } from "types/types";
 
 const WalletPositions = () => {
     const { getWalletById } = useWallets();
     const [wallet, setWallet] = useState<WalletProps>();
     const [search, setSearch] = useState('');
-    const { id, categoryId } = useParams();
+    const { walletId, categoryId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
-            const wallet = await getWalletById(Number.parseInt(id as string));
+            const wallet = await getWalletById(Number.parseInt(walletId as string));
             setWallet(wallet);
         })()
-    }, [id]);
+    }, [walletId]);
 
     if (!wallet) {
         return (
@@ -50,15 +51,15 @@ const WalletPositions = () => {
                         {wallet.assetPositions?.filter((item) => item.assetCategoryId === Number.parseInt(categoryId as string)).filter((item) => {
                             return search.toLowerCase() === '' ? item : `${item.assetName} ${item.ticker}`.toLowerCase().includes(search.toLowerCase());
                         }).map((item, index) => (
-                            <Table.Tr key={item.assetId}>
+                            <Table.Tr key={item.assetId} onClick={() => navigate(`transaction/${item.assetId}`)}>
                                 <Table.Td>{index + 1}</Table.Td>
                                 <Table.Td>{item.assetName}</Table.Td>
                                 <Table.Td>{item.ticker}</Table.Td>
                                 <Table.Td>{item.quantity}</Table.Td>
-                                <Table.Td>{`${item.price} ${wallet.currency}`}</Table.Td>
+                                <Table.Td><NumberFormatter value={item.price} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><NumberFormatter value={item.totalValue} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><NumberFormatter value={item.totalCost} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
-                                <Table.Td>{`${item.avgCost} ${wallet.currency}`}</Table.Td>
+                                <Table.Td><NumberFormatter value={item.avgCost} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><PriceChangeFormatter size='sm' value={item.profit} currency={wallet.currency} /></Table.Td>
                                 <Table.Td><NumberFormatter value={item.percentageInWallet} suffix={` %`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td><PercentageChangeFormatter size='sm' value={item.percentageChange24h} /></Table.Td>

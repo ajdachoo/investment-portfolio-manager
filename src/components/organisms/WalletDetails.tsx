@@ -10,15 +10,15 @@ const WalletDetails = () => {
     const { getWalletById } = useWallets();
     const [wallet, setWallet] = useState<WalletProps>();
     const [search, setSearch] = useState('');
-    const { id } = useParams();
+    const { walletId } = useParams();
     const navigate = useNavigate()
 
     useEffect(() => {
         (async () => {
-            const wallet = await getWalletById(Number.parseInt(id as string));
+            const wallet = await getWalletById(Number.parseInt(walletId as string));
             setWallet(wallet);
         })()
-    }, [id]);
+    }, [walletId]);
 
     if (!wallet) {
         return (
