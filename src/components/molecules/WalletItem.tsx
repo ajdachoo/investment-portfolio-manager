@@ -10,16 +10,6 @@ interface WalletItemProps {
     wallet: WalletProps;
 }
 
-const getPriceChangeColor = (n: number) => {
-    if (n > 0) {
-        return 'green';
-    } else if (n < 0) {
-        return 'red';
-    } else {
-        return 'black';
-    }
-}
-
 const getDonutChartColor = (category: AssetCategoryEnum) => {
     switch (category) {
         case AssetCategoryEnum.Cryptocurrencies:
@@ -41,21 +31,31 @@ const WalletItem: React.FC<WalletItemProps> = ({ wallet: { id, name, details, as
         data.push({ name: categoryName, value: percentageInWallet, color: getDonutChartColor(categoryName) });
     })
 
+    const handleOnClick = () => {
+        if (assetCategoryPositions.length > 0) {
+            navigate(`${id}`);
+        }
+    }
+
     return (
         <Paper shadow='md' radius='md' h={500} p='md' style={{ cursor: 'pointer' }} onClick={() => navigate(`${id}`)}>
             <Flex align='center' direction='column' gap='md'>
                 <Title order={3}>{name}</Title>
                 <Text c="dimmed">{details}</Text>
-                <DonutChart size={160} thickness={20} data={data} valueFormatter={(value) => value.toFixed(2) + '%'} />
-                <Flex direction='column' wrap='wrap' align='start' w='100%'>
-                    <Text size='md'>Current Balance: <NumberFormatter value={currentValue} suffix={` ${currency}`} decimalScale={2} thousandSeparator=',' /></Text>
-                    <Text display='inline-flex' size='md'>Total Profit/Loss: <PriceChangeFormatter size='md' value={totalProfit} currency={currency} /></Text>
-                    <Text size='md'>Total Cost: <NumberFormatter value={totalCost} suffix={` ${currency}`} decimalScale={2} thousandSeparator=',' /></Text>
-                    <Text display='inline-flex' size="md">Percentage Change 24h: <PercentageChangeFormatter value={percentageChange24h} size="md" /></Text>
-                    <Text display='inline-flex' size="md">Percentage Change 7d: <PercentageChangeFormatter value={percentageChange7d} size="md" /></Text>
-                    <Text display='inline-flex' size="md">Percentage Change 1m: <PercentageChangeFormatter value={percentageChange1m} size="md" /></Text>
-                    <Text display='inline-flex' size="md">Percentage Change 1y: <PercentageChangeFormatter value={percentageChange1y} size="md" /></Text>
-                </Flex>
+                {assetCategoryPositions.length > 0 ?
+                    <>
+                        <DonutChart size={160} thickness={20} data={data} valueFormatter={(value) => value.toFixed(2) + '%'} />
+                        <Flex direction='column' wrap='wrap' align='start' w='100%'>
+                            <Text size='md'>Current Balance: <NumberFormatter value={currentValue} suffix={` ${currency}`} decimalScale={2} thousandSeparator=',' /></Text>
+                            <Text display='inline-flex' size='md'>Total Profit/Loss: <PriceChangeFormatter size='md' value={totalProfit} currency={currency} /></Text>
+                            <Text size='md'>Total Cost: <NumberFormatter value={totalCost} suffix={` ${currency}`} decimalScale={2} thousandSeparator=',' /></Text>
+                            <Text display='inline-flex' size="md">Percentage Change 24h: <PercentageChangeFormatter value={percentageChange24h} size="md" /></Text>
+                            <Text display='inline-flex' size="md">Percentage Change 7d: <PercentageChangeFormatter value={percentageChange7d} size="md" /></Text>
+                            <Text display='inline-flex' size="md">Percentage Change 1m: <PercentageChangeFormatter value={percentageChange1m} size="md" /></Text>
+                            <Text display='inline-flex' size="md">Percentage Change 1y: <PercentageChangeFormatter value={percentageChange1y} size="md" /></Text>
+                        </Flex>
+                    </>
+                    : <Title order={4}>No transactions</Title>}
             </Flex>
         </Paper>
     );

@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import axios from "axios";
-import { API_URL, AssetCategoryEnum, WalletProps } from "types/types";
+import { API_URL, AssetCategoryEnum, CreateWalletProps, WalletProps } from "types/types";
+import { useAuth } from "./useAuth";
 
 const walletsAPI = axios.create({});
 
@@ -21,6 +22,7 @@ walletsAPI.interceptors.request.use(
 );
 
 export const useWallets = () => {
+    const { user } = useAuth();
 
     const getWallets = useCallback(async () => {
         try {
@@ -47,5 +49,9 @@ export const useWallets = () => {
         }
     }, [])
 
-    return { getWallets, getWalletById };
+    const createWallet = useCallback(async (walletData: CreateWalletProps) => {
+        await walletsAPI.post(`/${user?.id}/wallet`, walletData);
+    }, [])
+
+    return { getWallets, getWalletById, createWallet };
 };

@@ -46,9 +46,14 @@ const Register = () => {
             navigate('/login');
         } catch (e) {
             if (isAxiosError(e)) {
-                console.log(e);
                 const error = e as AxiosError;
-                setErrorMessage(error.message)
+                if (error.response) {
+                    const errorData = (error.response.data as { errors: { [key: string]: string } }).errors;
+                    const key = Object.keys(errorData)[0];
+                    setErrorMessage(errorData[key]);
+                } else {
+                    setErrorMessage(error.message);
+                }
                 setIsLoading(false);
             }
         }
@@ -62,7 +67,7 @@ const Register = () => {
                 Create an Account
             </Title>
             <Text c="dimmed" size="sm" ta="center" mt={5}>
-                Already have na account?{' '}
+                Already have an account?{' '}
                 <Anchor onClick={() => navigate('/login')} size="sm" component="button">
                     Sign In
                 </Anchor>

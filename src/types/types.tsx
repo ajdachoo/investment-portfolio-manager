@@ -58,6 +58,11 @@ export type WalletProps = {
     assetCategoryPositions: AssetCategoryPosition[];
 }
 
+export type CreateWalletProps = {
+    name: string;
+    details: string;
+}
+
 export type AssetPosition = {
     assetId: number;
     assetName: string;

@@ -1,4 +1,4 @@
-import { Flex, Text, Paper, TextInput, PasswordInput, Button, Title, Anchor, LoadingOverlay, Notification, Alert } from "@mantine/core";
+import { Flex, Text, Paper, TextInput, PasswordInput, Button, Title, Anchor, LoadingOverlay, Alert } from "@mantine/core";
 import React, { useState } from "react";
 import { hasLength, isEmail, useForm } from "@mantine/form";
 import { useAuth } from "hooks/useAuth";
@@ -32,8 +32,7 @@ const Login = () => {
 
         try {
             await auth.signIn(values);
-            navigate('/assets');
-
+            navigate('/wallets');
         } catch (e) {
             if (isAxiosError(e)) {
                 const error = e as AxiosError;
