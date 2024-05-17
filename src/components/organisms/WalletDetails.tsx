@@ -1,4 +1,4 @@
-import { Flex, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
+import { Button, Flex, Group, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import { useWallets } from "hooks/useWallets";
@@ -7,11 +7,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { WalletProps } from "types/types";
 
 const WalletDetails = () => {
-    const { getWalletById } = useWallets();
+    const { getWalletById, deleteWallet } = useWallets();
     const [wallet, setWallet] = useState<WalletProps>();
     const [search, setSearch] = useState('');
     const { walletId } = useParams();
     const navigate = useNavigate()
+
+    const handleOnDelete = async () => {
+        await deleteWallet(Number.parseInt(walletId as string));
+        navigate('/wallets');
+    }
 
     useEffect(() => {
         (async () => {
@@ -27,6 +32,10 @@ const WalletDetails = () => {
     } else {
         return (
             <Flex direction='column' justify='flex-start' w='100%' gap='sm'>
+                <Group justify='space-between'>
+                    <Button>+ Add transaction</Button>
+                    <Button color={'red'} onClick={handleOnDelete}>Delete wallet</Button>
+                </Group>
                 <TextInput onChange={(e) => setTimeout(() => setSearch(e.target.value), 500)} placeholder='Search...' />
                 <Table>
                     <Table.Thead>

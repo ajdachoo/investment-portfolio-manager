@@ -31,12 +31,6 @@ const WalletItem: React.FC<WalletItemProps> = ({ wallet: { id, name, details, as
         data.push({ name: categoryName, value: percentageInWallet, color: getDonutChartColor(categoryName) });
     })
 
-    const handleOnClick = () => {
-        if (assetCategoryPositions.length > 0) {
-            navigate(`${id}`);
-        }
-    }
-
     return (
         <Paper shadow='md' radius='md' h={500} p='md' style={{ cursor: 'pointer' }} onClick={() => navigate(`${id}`)}>
             <Flex align='center' direction='column' gap='md'>

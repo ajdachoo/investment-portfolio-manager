@@ -53,5 +53,9 @@ export const useWallets = () => {
         await walletsAPI.post(`/${user?.id}/wallet`, walletData);
     }, [])
 
-    return { getWallets, getWalletById, createWallet };
+    const deleteWallet = useCallback(async (walletId: number) => {
+        await walletsAPI.delete(`/${user?.id}/wallet/${walletId}`);
+    }, [])
+
+    return { getWallets, getWalletById, createWallet, deleteWallet };
 };
