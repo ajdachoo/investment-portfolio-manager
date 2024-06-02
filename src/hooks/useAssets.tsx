@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import axios from "axios";
-import { API_URL, AssetCategoryEnum, AssetProps } from "types/types";
+import { API_URL, AssetCategoryEnum, AssetName, AssetProps } from "types/types";
 import { useAuth } from "./useAuth";
 
 const assetsAPI = axios.create({});
@@ -35,5 +35,26 @@ export const useAssets = () => {
         }
     }, []);
 
-    return { getAssets };
+    const getAssetById = useCallback(async (assetId: number) => {
+        try {
+            let result = await assetsAPI.get<AssetProps>(`/asset/${user?.currency}/${assetId}`)
+            result.data.category = AssetCategoryEnum[result.data.category as keyof typeof AssetCategoryEnum];
+
+            return result.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }, [])
+
+    const getAssetNameslist = useCallback(async () => {
+        try {
+            let result = await assetsAPI.get<AssetName[]>(`/asset/${user?.currency}/namelist`);
+
+            return result.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }, []);
+
+    return { getAssets, getAssetById, getAssetNameslist };
 };

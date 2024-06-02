@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import axios from "axios";
-import { API_URL, Transaction } from "types/types";
+import { API_URL, CreateTransactionProps, Transaction } from "types/types";
+import { useAuth } from "./useAuth";
 
 const transactionsAPI = axios.create({});
 
@@ -21,6 +22,7 @@ transactionsAPI.interceptors.request.use(
 );
 
 export const useTransactions = () => {
+    const { user } = useAuth();
 
     const getTransactionsByAssetId = useCallback(async (walletId: number, assetId: number) => {
         try {
@@ -32,5 +34,9 @@ export const useTransactions = () => {
         }
     }, [])
 
-    return { getTransactionsByAssetId };
+    const addTransaction = useCallback(async (walletId: number, transactionData: CreateTransactionProps) => {
+        await transactionsAPI.post<CreateTransactionProps>(`/${user?.id}/wallet/${walletId}/transaction`, transactionData);
+    }, [])
+
+    return { getTransactionsByAssetId, addTransaction };
 };

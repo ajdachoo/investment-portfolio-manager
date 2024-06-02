@@ -83,6 +83,12 @@ export type AssetPosition = {
     percentageChange1y: number;
 }
 
+export type AssetName = {
+    id: number;
+    name: string;
+    ticker: string;
+}
+
 export type AssetCategoryPosition = {
     categoryId: number;
     categoryName: AssetCategoryEnum;
@@ -107,6 +113,14 @@ export type Transaction = {
     quantity: number;
     initialValue: number;
     currency: CurrencyEnum;
+    transactionDate: string;
+}
+
+export type CreateTransactionProps = {
+    assetId: number;
+    type: string;
+    quantity: number;
+    initialValue: number;
     transactionDate: string;
 }
 
@@ -138,8 +152,11 @@ export enum UserStatusEnum {
 };
 
 /*export enum AssetCategoryEnum {
-    PolishStocks = 'Polish stocks',
-    Cryptocurrencies = 'Cryptocurrencies',
-    USStocks = 'US stocks',
-    PhysicalCurrencies = 'Physical currencies'
+    {
+  "assetId": 0,
+  "type": "string",
+  "quantity": 0,
+  "initialValue": 0,
+  "transactionDate": "string"
+}
 } */

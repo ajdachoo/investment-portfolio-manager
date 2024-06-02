@@ -1,13 +1,16 @@
 import { Button, Flex, Group, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import { useWallets } from "hooks/useWallets";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { WalletProps } from "types/types";
+import CreateTransactionFormModal from "./CreateTransactionFormModal";
 
 const WalletDetails = () => {
     const { getWalletById, deleteWallet } = useWallets();
+    const [opened, { open, close }] = useDisclosure(false);
     const [wallet, setWallet] = useState<WalletProps>();
     const [search, setSearch] = useState('');
     const { walletId } = useParams();
@@ -23,7 +26,7 @@ const WalletDetails = () => {
             const wallet = await getWalletById(Number.parseInt(walletId as string));
             setWallet(wallet);
         })()
-    }, [walletId]);
+    }, [walletId, opened]);
 
     if (!wallet) {
         return (
@@ -33,9 +36,10 @@ const WalletDetails = () => {
         return (
             <Flex direction='column' justify='flex-start' w='100%' gap='sm'>
                 <Group justify='space-between'>
-                    <Button>+ Add transaction</Button>
+                    <Button onClick={open}>+ Add transaction</Button>
                     <Button color={'red'} onClick={handleOnDelete}>Delete wallet</Button>
                 </Group>
+                <CreateTransactionFormModal opened={opened} onClose={close} wallet={wallet} />
                 <TextInput onChange={(e) => setTimeout(() => setSearch(e.target.value), 500)} placeholder='Search...' />
                 <Table>
                     <Table.Thead>
