@@ -1,9 +1,11 @@
-import { Flex, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
+import { Button, Flex, Loader, NumberFormatter, Table, TextInput, UnstyledButton, rem } from "@mantine/core";
+import { TrashIcon } from "assets/icons/trashIcon";
 import { useDates } from "hooks/useDates";
 import { useTransactions } from "hooks/useTransactions";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Transaction, TransactionEnum } from "types/types";
+import classes from "./WalletTransactions.module.css";
 
 const getTransactionTypeColor = (type: string) => {
     if (type == 'Buy') {
@@ -14,18 +16,23 @@ const getTransactionTypeColor = (type: string) => {
 }
 
 const WalletTransactions = () => {
-    const { getTransactionsByAssetId } = useTransactions();
+    const { getTransactionsByAssetId, deleteTransaction } = useTransactions();
     const [transactions, setTransactions] = useState<Transaction[]>();
     const [search, setSearch] = useState('');
     const { walletId, assetId } = useParams();
     const { getFormatDate } = useDates();
+    const navigate = useNavigate();
+
+    const handleDeleteButton = async (transactionId: number) => {
+        await deleteTransaction(Number.parseInt(walletId as string), transactionId);
+    }
 
     useEffect(() => {
         (async () => {
             const transactions = await getTransactionsByAssetId(Number.parseInt(walletId as string), Number.parseInt(assetId as string));
             setTransactions(transactions)
         })()
-    }, [walletId, assetId]);
+    }, [walletId, assetId, handleDeleteButton]);
 
     if (!transactions) {
         return (
@@ -57,6 +64,7 @@ const WalletTransactions = () => {
                                 <Table.Td>{item.quantity}</Table.Td>
                                 <Table.Td><NumberFormatter value={item.initialValue} suffix={` ${item.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td>{getFormatDate(item.transactionDate)}</Table.Td>
+                                <Table.Td><UnstyledButton onClick={() => handleDeleteButton(item.id)} className={classes.trashButton}><TrashIcon style={{ width: rem(20), height: rem(20) }} /></UnstyledButton></Table.Td>
                             </Table.Tr>
                         ))}
                     </Table.Tbody>

@@ -38,5 +38,9 @@ export const useTransactions = () => {
         await transactionsAPI.post<CreateTransactionProps>(`/${user?.id}/wallet/${walletId}/transaction`, transactionData);
     }, [])
 
-    return { getTransactionsByAssetId, addTransaction };
+    const deleteTransaction = useCallback(async (walletId: number, transactionId: number) => {
+        await transactionsAPI.delete(`/${user?.id}/wallet/${walletId}/transaction/${transactionId}`);
+    }, [])
+
+    return { getTransactionsByAssetId, addTransaction, deleteTransaction };
 };
