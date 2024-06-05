@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Transaction, TransactionEnum } from "types/types";
 import classes from "./WalletTransactions.module.css";
 
+
 const getTransactionTypeColor = (type: string) => {
     if (type == 'Buy') {
         return 'green';
@@ -21,7 +22,6 @@ const WalletTransactions = () => {
     const [search, setSearch] = useState('');
     const { walletId, assetId } = useParams();
     const { getFormatDate } = useDates();
-    const navigate = useNavigate();
 
     const handleDeleteButton = async (transactionId: number) => {
         await deleteTransaction(Number.parseInt(walletId as string), transactionId);
@@ -36,13 +36,13 @@ const WalletTransactions = () => {
 
     if (!transactions) {
         return (
-            <Flex align='center' justify='center'><Loader size='lg' /></Flex>
+            <Flex align='center' justify='center' h={'100%'}><Loader size='lg' /></Flex>
         );
     } else {
         return (
             <Flex direction='column' justify='flex-start' w='100%' gap='sm'>
                 <TextInput onChange={(e) => setTimeout(() => setSearch(e.target.value), 500)} placeholder='Search...' />
-                <Table>
+                <Table className={classes.styledTable}>
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th>#</Table.Th>

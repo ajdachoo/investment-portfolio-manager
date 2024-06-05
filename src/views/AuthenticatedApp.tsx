@@ -49,9 +49,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Navigate to={'/wallets'} />} />
           <Route path="/wallets" element={<WalletsSection />} />
-          <Route path='/wallets/:walletId' element={<WalletDetails />} />
-          <Route path='/wallets/:walletId/category/:categoryId' element={<WalletPositions />} />
-          <Route path='/wallets/:walletId/category/:categoryId/transaction/:assetId' element={<WalletTransactions />} />
+          <Route path='/wallets/:walletId/*' element={<WalletDetails />} />
           <Route path="/assets" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>

@@ -1,0 +1,4 @@
+.styledTable tr:hover td {
+    cursor: pointer;
+    background-color: #F8F9FA;
+}
