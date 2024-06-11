@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const mockData = [
-    { label: 'All assets', link: '/assets' },
+    { label: 'All assets', link: '/assets/page/1' },
     { label: 'My wallets', link: '/wallets' },
 ]
 

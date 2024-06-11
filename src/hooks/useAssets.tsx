@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import axios from "axios";
-import { API_URL, AssetCategoryEnum, AssetName, AssetProps } from "types/types";
+import { API_URL, AssetCategoryEnum, AssetName, AssetProps, PagedResult } from "types/types";
 import { useAuth } from "./useAuth";
 
 const assetsAPI = axios.create({});
@@ -24,10 +24,17 @@ assetsAPI.interceptors.request.use(
 export const useAssets = () => {
     const { user } = useAuth()
 
-    const getAssets = useCallback(async () => {
+    const getAssets = useCallback(async (pageSize: number, pageNumber: number, searchPhrase: string = '') => {
         try {
-            let result = await assetsAPI.get<AssetProps[]>(`/asset/${user?.currency}`);
-            result.data.forEach(x => x.category = AssetCategoryEnum[x.category as keyof typeof AssetCategoryEnum]);
+            const params = {
+                currency: user?.currency,
+                pageSize: pageSize,
+                pageNumber: pageNumber,
+                searchPhrase: searchPhrase
+            }
+
+            let result = await assetsAPI.get<PagedResult<AssetProps>>(`/asset`, { params: params });
+            result.data.items.forEach(x => x.category = AssetCategoryEnum[x.category as keyof typeof AssetCategoryEnum]);
 
             return result.data;
         } catch (e) {

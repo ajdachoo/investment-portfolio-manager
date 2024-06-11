@@ -25,6 +25,14 @@ export type RegisterUserProps = {
     currency: string;
 };
 
+export type PagedResult<T> = {
+    items: T[];
+    totalPages: number;
+    itemsFrom: number;
+    itemsTo: number;
+    totalItemsCount: number;
+}
+
 export type AssetProps = {
     id: number;
     name: string;

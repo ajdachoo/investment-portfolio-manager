@@ -1,27 +1,35 @@
-import { Flex, Loader, NumberFormatter, Table, TextInput } from "@mantine/core";
+import { Flex, Loader, NumberFormatter, Pagination, Table, TextInput } from "@mantine/core";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
 import { useAssets } from "hooks/useAssets";
 import React, { useEffect, useState } from "react";
-import { AssetProps } from "types/types";
+import { useNavigate, useParams } from "react-router-dom";
+import { AssetProps, PagedResult } from "types/types";
 
 const AssetsTable = () => {
     const { getAssets } = useAssets();
-    const [assets, setAssets] = useState<AssetProps[]>();
+    const [assets, setAssets] = useState<PagedResult<AssetProps>>();
     const [search, setSearch] = useState('');
+    const { page, searchPhrase } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
-            const assets = await getAssets();
-            setAssets(assets);
+            setAssets(undefined);
+            const data = await getAssets(100, parseInt(page as string), searchPhrase);
+            setAssets(data);
         })()
-    }, []);
+    }, [page, searchPhrase]);
+
+    const handleOnEnterPress = async () => {
+        navigate(`/assets/page/1/${search}`);
+    }
 
     if (!assets) {
         return (<Flex align='center' justify='center'><Loader size='lg' /></Flex>);
     } else {
         return (
-            <Flex direction='column' justify='flex-start' w='100%' gap='sm'>
-                <TextInput onChange={(e) => setTimeout(() => setSearch(e.target.value), 500)} placeholder='Search...' />
+            <Flex direction='column' justify='flex-start' align='center' w='100%' gap='sm'>
+                <TextInput w='100%' onKeyDown={(e) => e.key === 'Enter' ? handleOnEnterPress() : null} value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search...' />
                 <Table>
                     <Table.Thead>
                         <Table.Tr>
@@ -37,9 +45,7 @@ const AssetsTable = () => {
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
-                        {assets?.filter((item) => {
-                            return search.toLowerCase() === '' ? item : `${item.name} ${item.ticker} ${item.category}`.toLowerCase().includes(search.toLowerCase());
-                        }).map((item, index) => (
+                        {assets.items.map((item, index) => (
                             <Table.Tr key={item.id}>
                                 <Table.Td>{index + 1}</Table.Td>
                                 <Table.Td>{item.name}</Table.Td>
@@ -54,6 +60,7 @@ const AssetsTable = () => {
                         ))}
                     </Table.Tbody>
                 </Table>
+                <Pagination p='md' total={assets.totalPages} value={parseInt(page as string)} onChange={(value) => navigate(`/assets/page/${value}/${search}`)} mt="sm" />
             </Flex>);
     }
 }

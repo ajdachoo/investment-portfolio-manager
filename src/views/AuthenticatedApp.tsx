@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/login" element={<Navigate to={'/wallets'} />} />
           <Route path="/wallets" element={<WalletsSection />} />
           <Route path='/wallets/:walletId/*' element={<WalletDetails />} />
-          <Route path="/assets" element={<AssetsTable />} />
+          <Route path="/assets/page/:page/:searchPhrase?" element={<AssetsTable />} />
         </Routes>
       </AppShell.Main>
     </AppShell>
