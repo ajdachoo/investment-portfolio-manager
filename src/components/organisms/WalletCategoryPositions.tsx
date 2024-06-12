@@ -5,6 +5,8 @@ import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WalletProps } from "types/types";
 import classes from "assets/styles/Table.module.css";
+import WalletInfoItem from "components/molecules/WalletInfoItem";
+import WalletInfo from "./WalletInfo";
 
 interface WalletCategoryPositionsProps {
     wallet: WalletProps;
@@ -23,6 +25,7 @@ const WalletCategoryPositions: FC<WalletCategoryPositionsProps> = ({ wallet, han
 
     return (
         <Flex direction='column' justify='flex-start' w='100%' gap='sm'>
+            <WalletInfo wallet={wallet} />
             <TextInput onChange={(e) => setTimeout(() => setSearch(e.target.value), 500)} placeholder='Search...' />
             <Table className={classes.styledTable}>
                 <Table.Thead>

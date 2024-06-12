@@ -55,7 +55,7 @@ const WalletTransactions = () => {
                     </Table.Thead>
                     <Table.Tbody>
                         {transactions.filter((item) => {
-                            return search.toLowerCase() === '' ? item : `${getFormatDate(item.transactionDate)} ${item.type}`.toLowerCase().includes(search.toLowerCase());
+                            return search.toLowerCase() === '' ? item : `${getFormatDate(item.transactionDate, 'long')} ${item.type}`.toLowerCase().includes(search.toLowerCase());
                         }).map((item, index) => (
                             <Table.Tr key={item.id}>
                                 <Table.Td>{index + 1}</Table.Td>
@@ -63,7 +63,7 @@ const WalletTransactions = () => {
                                 <Table.Td><NumberFormatter value={item.price} suffix={` ${item.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
                                 <Table.Td>{item.quantity}</Table.Td>
                                 <Table.Td><NumberFormatter value={item.initialValue} suffix={` ${item.currency}`} decimalScale={2} thousandSeparator=',' /></Table.Td>
-                                <Table.Td>{getFormatDate(item.transactionDate)}</Table.Td>
+                                <Table.Td>{getFormatDate(item.transactionDate, 'long')}</Table.Td>
                                 <Table.Td><UnstyledButton onClick={() => handleDeleteButton(item.id)} className={classes.trashButton}><TrashIcon style={{ width: rem(20), height: rem(20) }} /></UnstyledButton></Table.Td>
                             </Table.Tr>
                         ))}
