@@ -1,5 +1,6 @@
 import { Flex, NumberFormatter, Text } from "@mantine/core";
 import PercentageChangeFormatter from "components/atoms/PercentageChangeFormatter";
+import PriceChangeFormatter from "components/atoms/PriceChangeFormatter";
 import WalletInfoItem from "components/molecules/WalletInfoItem";
 import { useDates } from "hooks/useDates";
 import React, { FC } from "react";
@@ -27,7 +28,7 @@ const WalletInfo: FC<WalletInfoProps> = ({ wallet }) => {
                 <NumberFormatter value={wallet.totalCost} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' />
             </WalletInfoItem>
             <WalletInfoItem label="Total Profit/Loss">
-                <NumberFormatter value={wallet.totalProfit} suffix={` ${wallet.currency}`} decimalScale={2} thousandSeparator=',' />
+                <PriceChangeFormatter size='md' value={wallet.totalProfit} currency={wallet.currency} />
             </WalletInfoItem>
             <WalletInfoItem label="Percentage Change 24h">
                 <PercentageChangeFormatter value={wallet.percentageChange24h} size="md" />

@@ -47,7 +47,7 @@ const AssetsTable = () => {
                     <Table.Tbody>
                         {assets.items.map((item, index) => (
                             <Table.Tr key={item.id}>
-                                <Table.Td>{index + 1}</Table.Td>
+                                <Table.Td>{index + 1 + 100 * (parseInt(page as string) - 1)}</Table.Td>
                                 <Table.Td>{item.name}</Table.Td>
                                 <Table.Td>{item.ticker}</Table.Td>
                                 <Table.Td>{item.category}</Table.Td>
